@@ -1,0 +1,74 @@
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Spécialité</th>
+      <th scope="col">Section</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let student of studentsArray">
+      <th scope="row"> {{teacher.id}}  </th>
+      <td>  {{teacher.name}}  </td>
+      <td> {{teacher.lastname}} </td>
+      <td> {{teacher.specialty}} </td>
+      <td> {{teacher.section.name}} </td>
+      <td> 
+        <button type="button" mat-button 
+         (click)="deleteExam(exam.exId)"
+        class="btn btn-sm btn-block btn-danger " >Supprimer
+        </button>   
+      </td>
+      <td>
+        <button (click)="updateExam(exam.exId)" 
+        type="button" mat-button class="btn btn-sm 
+        btn-block btn-success ">
+          Modifier
+        </button>
+      </td>
+    </tr>
+
+    
+
+  </tbody>
+  
+</table>
+
+
+<div class="container my-4">
+  <div class="border border-light p-3 mb-4">
+    <div class="d-flex align-items-center flex-column justify-content-center h-100">
+
+      
+
+      <div class="panel-footer row"><!-- panel-footer -->
+        <div class="col-xs-6 text-left">
+            <div class="previous">
+              <button type="button" mat-button class="btn btn-lg  btn-primary">
+                <a routerLink="/existing-sections-teachers" 
+                routerLinkActive="active">
+                  Sections
+                </a>
+              </button>
+            </div>
+        </div>
+        
+        <div class="col-xs-6 text-right">   
+            <div class="next">
+              <button type="button" mat-button class="btn btn-lg   btn-primary" style="margin-left: 200px;">
+                <a routerLink="/teacher-form" 
+                routerLinkActive="active">
+                  Ajouter Enseignant
+                </a>
+              </button>
+            </div>
+        </div>
+      </div><!-- end panel-footer -->
+    </div>
+  </div>
+</div>
+
+

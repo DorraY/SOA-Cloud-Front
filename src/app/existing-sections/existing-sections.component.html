@@ -1,0 +1,73 @@
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      
+      <th scope="col">Nom</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let section of sections">
+      <th scope="row"> {{section.name}}  </th>
+      
+      <!-- <td> 
+        <button type="button" mat-button 
+        class="btn btn-sm btn-block btn-danger " >Supprimer
+        </button>   
+      </td> -->
+      <td>
+        <button type="button" mat-button class="btn btn-sm 
+        btn-block btn-danger "
+        (click)="deleteSection(section.id)">
+        Supprimer
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+<div class="container my-4">
+  <div class="border border-light p-3 mb-4">
+    <div class="d-flex align-items-center flex-column justify-content-center h-100">
+      <form novalidate [formGroup]="SectionForm" 
+      (ngSubmit)="onSubmit()" #sform="ngForm">
+            <table class="form-size">
+              <p>
+                <td >
+                  <mat-form-field class="form-group">
+                    <input  required matInput formControlName="sectionNom" id="sectionNom" [(ngModel)]="section.thNom"
+                    placeholder="Nom de section" type="text">
+                    <mat-error *ngIf="formErrors.sectionNom" > {{formErrors.sectionNom}} </mat-error>
+                    <mat-error *ngIf="SectionForm.get('sectionNom').touched &&!formErrors.sectionNom" >Le nom est obligatoire  </mat-error>
+
+                  </mat-form-field>
+                </td>
+              </p>
+
+              <button type="submit"  mat-button 
+              class="btn btn-lg btn-block btn-success " 
+              [disabled]="SectionForm.invalid">Valider
+            </button>
+            <button type="button" mat-button class="btn btn-lg btn-block btn-danger " 
+            onclick="reset()" >Reset
+            </button>
+            <button type="button" mat-button class="btn btn-lg btn-block btn-primary " 
+             >
+            <a routerLink="/existing-students" 
+            routerLinkActive="active">
+              Etudiants
+            </a>
+            </button>
+            </table>
+            
+
+
+
+      </form>
+    </div>
+
+  </div>
+</div>
+

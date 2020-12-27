@@ -1,0 +1,88 @@
+<div class="container my-4">
+  <div class="border border-light p-3 mb-4">
+    <div class="d-flex align-items-center flex-column justify-content-center h-100">
+      <form novalidate [formGroup]="TeacherForm" 
+      (ngSubmit)="onSubmit()" #sform="ngForm">
+            <table class="form-size">
+              <p>
+                <td >
+                  <mat-form-field class="form-group">
+                    <input  required matInput formControlName="name" id="name" [(ngModel)]="teacher.name"
+                    placeholder="Prénom" type="text">
+                    <mat-error *ngIf="formErrors.name" > {{formErrors.name}} </mat-error>
+                    <mat-error *ngIf="TeacherForm.get('name').touched &&!formErrors.name" >Le prénom est obligatoire  </mat-error>
+
+                  </mat-form-field>
+                </td>
+              </p>
+
+              <p>
+                <td >
+                  <mat-form-field class="form-group">
+                    <input  required matInput formControlName="lastname" id="lastname" [(ngModel)]="teacher.lastname"
+                    placeholder="Nom" type="text">
+                    <mat-error *ngIf="formErrors.lastname" > {{formErrors.lastname}} </mat-error>
+                    <mat-error *ngIf="TeacherForm.get('lastname').touched &&!formErrors.lastname" >Le nom est obligatoire  </mat-error>
+
+                  </mat-form-field>
+                </td>
+              </p>
+
+              <p>
+                <td >
+                  <mat-form-field class="form-group">
+                    <input  required matInput formControlName="speciality" id="speciality" [(ngModel)]="teacher.speciality"
+                    placeholder="Spécialité" type="text">
+                    <mat-error *ngIf="formErrors.speciality" > {{formErrors.speciality}} </mat-error>
+                    <mat-error *ngIf="TeacherForm.get('speciality').touched &&!formErrors.speciality" >La spécialité est obligatoire  </mat-error>
+
+                  </mat-form-field>
+                </td>
+              </p>
+
+              <p>
+                <td>
+                  <mat-form-field>
+                    <input matinput type="text" placeholder="Section" id="section" 
+                    [(ngModel)]="teacher.section" matInput formControlName="section" 
+                    style="margin-right: 100px;"
+                         [matAutocomplete]="auto">
+                         <mat-error *ngIf="formErrors.section" > {{formErrors.section}}</mat-error>     
+                         <mat-error *ngIf="TeacherForm.get('section').touched &&!formErrors.section" >La section est obligatoire 
+                            </mat-error>
+                       <mat-autocomplete #auto="matAutocomplete">
+                         <mat-option *ngFor="let section of sections" [value]="(section|json)">
+                           {{section}}
+                        </mat-option>
+
+                    </mat-autocomplete>
+                 </mat-form-field>
+                  
+
+                </td>
+              </p>
+
+
+
+
+              
+
+              <button type="submit"  mat-button 
+              class="btn btn-lg btn-block btn-success " 
+              [disabled]="TeacherForm.invalid">Valider
+              <!-- <a routerLink="/questions-interface" routerLinkActive="active"> Valider</a> -->
+            </button>
+            <button type="button" mat-button class="btn btn-lg btn-block btn-danger " 
+            onclick="reset()" >Reset
+            </button>
+            </table>
+            
+
+
+
+      </form>
+    </div>
+
+  </div>
+</div>
+

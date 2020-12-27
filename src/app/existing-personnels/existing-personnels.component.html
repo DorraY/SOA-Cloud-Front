@@ -1,0 +1,59 @@
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Titre</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let adminstratif of adminstratifsArray">
+      <th scope="row"> {{adminstratif.id}}  </th>
+      <td>  {{adminstratif.name}}  </td>
+      <td> {{adminstratif.lastname}} </td>
+      <td> {{adminstratif.job}} </td>
+      <td> 
+        <button type="button" mat-button 
+         (click)="deleteExam(exam.exId)"
+        class="btn btn-sm btn-block btn-danger " >Supprimer
+        </button>   
+      </td>
+      <td>
+        <button (click)="updateExam(exam.exId)" 
+        type="button" mat-button class="btn btn-sm 
+        btn-block btn-success ">
+          Modifier
+        </button>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+
+<div class="container my-4">
+  <div class="border border-light p-3 mb-4">
+    <div class="d-flex align-items-center flex-column justify-content-center h-100">
+
+      
+
+      <div class="panel-footer row"><!-- panel-footer -->
+        
+        <div class="col-xs-6 text-right">   
+            <div class="next">
+              <button type="button" mat-button class="btn btn-lg   btn-primary">
+                <a routerLink="/personnel-form" 
+                routerLinkActive="active">
+                  Ajouter Personnel
+                </a>
+              </button>
+            </div>
+        </div>
+      </div><!-- end panel-footer -->
+    </div>
+  </div>
+</div>
+
+
