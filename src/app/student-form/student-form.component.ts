@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SectionService } from '../services/section.service';
+import { StudentService } from '../services/student.service';
 import { Section } from '../shared/section';
 import { Student } from '../shared/student';
 
@@ -37,13 +39,19 @@ export class StudentFormComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private studentService: StudentService,
+    private sectionService: SectionService,
   ) { }
 
   reloadSection() {
-    this.sections = ['test']
-
-
+    this.sectionService.getSectionList().subscribe(
+      (section) => {
+        for (let i=0 ; i<section.length;i++) {
+          this.sections.push(section[i])
+        }
+      }
+    )
   }
  
   ngOnInit() {
@@ -59,9 +67,9 @@ export class StudentFormComponent implements OnInit {
       lastname: ['',Validators.required],
      })
 
-     this.StudentForm.valueChanges.subscribe( data =>
+    this.StudentForm.valueChanges.subscribe( data =>
       this.onValueChanged(data))
-      this.onValueChanged()
+    this.onValueChanged()
    }
 
    onValueChanged(data?:any) {
@@ -94,6 +102,14 @@ export class StudentFormComponent implements OnInit {
    }
 
    onSubmit() {
+     console.log(this.student)
+     this.studentService.createStudent(this.student).subscribe(
+       data => {
+         console.log(data)
+       },
+       error => console.log(error)
+     )
+     this.reset()
 
    }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AdminstratifService } from '../services/adminstratif.service';
 import {Adminstratif} from '../shared/adminstratif'
 
 @Component({
@@ -34,18 +35,15 @@ export class PersonnelFormComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private adminstratifService:AdminstratifService
   ) { }
 
-  reloadSection() {
 
-
-  }
  
   ngOnInit() {
 
     this.createForm()
-    this.reloadSection()
   }
 
    createForm() {
@@ -90,12 +88,13 @@ export class PersonnelFormComponent implements OnInit {
    }
 
    onSubmit() {
-
+     console.log(this.adminstratif)
+     this.adminstratifService.createAgent(this.adminstratif).subscribe(
+       data => {
+         console.log(data)
+       },
+       error => console.log(error)
+     )
+     this.reset()
    }
-
-
-
-
-  
-
 }

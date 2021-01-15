@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SectionTeacherService } from '../services/section-teacher.service';
+import { TeacherService } from '../services/teacher.service';
 import { Section } from '../shared/section';
 import { Teacher } from '../shared/teacher';
 
@@ -41,11 +43,19 @@ export class TeacherFormComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private sectionService: SectionTeacherService,
+    private teacherSerice: TeacherService
   ) { }
 
   reloadSection() {
-    this.sections = ['test']
+    this.sectionService.getTeacherSectionList().subscribe(
+      (section) => {
+        for (let i=0;i<section.length;i++) {
+          this.sections.push(section[i])
+        }
+      }
+    )
   }
 
   ngOnInit() {
@@ -98,6 +108,14 @@ export class TeacherFormComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.teacher)
+    this.teacherSerice.createTeacher(this.teacher).subscribe(
+      data => {
+        console.log(data)
+      },
+      error => console.log(error)
+    )
+    this.reset()
 
   }
 
