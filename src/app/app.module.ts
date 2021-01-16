@@ -24,7 +24,6 @@ import { MatDialogModule,MatDialogRef } from '@angular/material/dialog';
 
 import {MatButtonModule} from '@angular/material/button';
 import { AideComponent } from './aide/aide.component';
-import { FinishedComponent } from './finished/finished.component';
 
 import { HttpClientModule } from '@angular/common/http';
 

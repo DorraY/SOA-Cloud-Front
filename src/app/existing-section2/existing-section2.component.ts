@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { SectionTeacherService } from '../services/section-teacher.service';
+import { TeacherService } from '../services/teacher.service';
 import { SectionTeacher } from '../shared/section_teacher';
 
 @Component({
@@ -12,7 +16,8 @@ export class ExistingSection2Component implements OnInit {
   @ViewChild('sform') sectionFormDirective
   SectionForm: FormGroup
   section: SectionTeacher = new SectionTeacher()
-  sections
+  sections: Observable<SectionTeacher>
+  sectionsTeacherArray: SectionTeacher[]
 
   formErrors = {
     'sectionNom': ''
@@ -25,15 +30,24 @@ export class ExistingSection2Component implements OnInit {
   }
 
 
-  constructor(private fb:FormBuilder) { }
+  constructor(private fb:FormBuilder, 
+    private router: Router,
+    private sectionTeacherService:  SectionTeacherService,
+    private teacherService: TeacherService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.createForm()
-    this.sections = []
+    this.sectionsTeacherArray = []
     this.reloadSections()
   }
   reloadSections() {
-    
+    this.sectionTeacherService.getTeacherSectionList().subscribe(
+      (data) => {
+        for (let i=0;i<data.length;i++) {
+          this.sectionsTeacherArray.push(data[i])
+        }
+      }
+    )
   }
 
   createForm() {
@@ -73,11 +87,23 @@ export class ExistingSection2Component implements OnInit {
   }
 
   deleteSection(id : number) {
-
+    this.sectionTeacherService.deleteTeacherSection(id).subscribe(
+      (data) => {
+        console.log(data)
+        location.reload()
+      }
+    )
   }
 
   onSubmit() {
-
+    this.section.name = this.section.name.trim()
+    this.sectionTeacherService.createTeacherSection(this.section).subscribe(
+      data => {
+        console.log(data)
+        location.reload()
+      },
+      error => console.log(error)
+    )
     this.reset()
 
   }

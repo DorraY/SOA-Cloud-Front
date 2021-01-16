@@ -1,6 +1,7 @@
 import { ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SectionService } from '../services/section.service';
 import { Section } from '../shared/section';
 
 @Component({
@@ -26,7 +27,7 @@ export class ExistingSectionsComponent implements OnInit {
   }
 
 
-  constructor(private fb:FormBuilder) { }
+  constructor(private fb:FormBuilder, private sectionService: SectionService) { }
 
   ngOnInit() {
     this.createForm()
@@ -34,6 +35,14 @@ export class ExistingSectionsComponent implements OnInit {
     this.reloadSections()
   }
   reloadSections() {
+    this.sectionService.getSectionList().subscribe(
+      (data) => {
+        for (let i=0;i<data.length;i++) {
+          this.sections.push(data[i])
+        }
+      }
+    )
+
     
   }
 
@@ -74,10 +83,23 @@ export class ExistingSectionsComponent implements OnInit {
   }
 
   deleteSection(id : number) {
+    this.sectionService.deleteSection(id).subscribe(
+      (data) => {
+        location.reload()
+      }
+    )
 
   }
 
   onSubmit() {
+
+    this.section.name = this.section.name.trim()
+    this.sectionService.createSection(this.section).subscribe(
+      data => {
+        console.log(data)
+        location.reload()
+      }, error => console.log(error)
+    )
 
     this.reset()
 
